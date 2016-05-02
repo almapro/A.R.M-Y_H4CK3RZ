@@ -38,6 +38,13 @@ final=();
 spl_arr=();
 spc_arr=();
 pipe="no";
+if ! [ -d "/root/Desktop/AlMAPRO" ]; then
+	print_error "You don't have AlMAPRO folder on Desktop!!";
+	print_good "Creating AlMAPRO folder....."
+	mk /root/Desktop/AlMAPRO;
+	print_good "Done."
+	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya"
+fi;
 temp_path="/root/Desktop/AlMAPRO/cdpg_tmp/"; # Temp files path. NOTE: Do NOT set it to /tmp folder or any folder inside of it. Why?
 # because if you turn off your computer you'll never continue from the last password and will start all over again.
 dtl="";
@@ -647,7 +654,6 @@ function do_mask(){
 	done;
 }
 function mask_all(){
-	mask_v="$4";
 	declare -a arr1=("${!1}");
 	declare -a arr2=("${!2}");
 	declare -a arr3=("${!3}");
@@ -656,20 +662,6 @@ function mask_all(){
 	dtl_c=${#arr1[@]};
 	nmb_c=${#arr2[@]};
 	spcl_c=${#arr3[@]};
-	#for msk_ in "${mask_arr[@]}"; do
-	#	if [ "$msk_" == "!" ]; then
-	#		mask_aw="$mask_aw!$dtl_c!";
-	#		dtl_c=$((dtl_c+1));
-	#	elif [ "$msk_" == "@" ]; then
-	#		mask_aw="$mask_aw@$nmb_c@";
-	#		nmb_c=$((nmb_c+1));
-	#	elif [ "$msk_" == "#" ]; then
-	#		mask_aw="$mask_aw~$spcl_c~";
-	#		spcl_c=$((spcl_c+1));
-	#	else
-	#		mask_aw="$mask_aw$msk_";
-	#	fi;
-	#done;
 	arr1_s=();
 	for ((i=0;i<$(($dtl_c+1));i++)); do
 		arr1_s+=("${arr1[0]}");
@@ -693,22 +685,12 @@ function mask_all(){
 	d_c=0;
 	n_c=0;
 	s_c=0;
-	arro=();
-	arro[0]="alma 1";
-	arro[1]="alma 2";
-	for ((i=0;i<${#arr1[@]};i++)); do
-		arro[0,0,$i]="${arr1[$i]}";
-	done;
-	echo "${arro[0]}";
-	echo "${arro[1]}";
-	echo "${arro[0,0,2]}";
-	d_counter=();
-	for ((i=0;i<$(($dtl_c+1));i++)); do
-		d_counter[$i]="0";
-	done;
 	until [ "${d_counter[$dtl_c]}" == "$dtl_c" ]; do
 		now_ps="";
 		d_now_c=0;
+		d_c=0;
+		n_c=0;
+		s_c=0;
 		for msk in "${mask_arr[@]}"; do
 			if [ "$msk" == "!" ]; then
 				if [ "${d_counter[$d_now_c]}" == "$dtl_c" ]; then
@@ -718,6 +700,15 @@ function mask_all(){
 				now_ps="$now_ps${arr1[${d_counter[$d_now_c]}]}";
 				d_counter[$d_now_c]=$((${d_counter[$d_now_c]}+1));
 				d_now_c=$(($d_now_c+1));
+				d_c=$(($d_c+1));
+			elif [ "$msk" == "@" ]; then
+				
+				n_c=$(($n_c+1));
+			elif [ "$msk" == "#" ]; then
+				
+				s_c=$(($s_c+1));
+			else
+				now_ps="$now_ps$msk"
 			fi;
 		done;
 		d_now_c=0;
