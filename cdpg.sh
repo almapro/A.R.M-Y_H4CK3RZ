@@ -201,8 +201,8 @@ if ! [ -d "/root/Desktop/AlMAPRO" ]; then
 	sleep 2;
 	print_good "Done."
 	sleep 2;
-	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya"
-	sleep 2;
+	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya.Official"
+	sleep 3;
 	echo ;
 fi;
 function check_int(){
