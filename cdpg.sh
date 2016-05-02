@@ -193,10 +193,14 @@ function print_info(){
 	>&2 echo -e "\x1B[01;34m$1\x1B[0m";
 }
 if ! [ -d "/root/Desktop/AlMAPRO" ]; then
+	echo ;
 	print_error "You don't have AlMAPRO folder on Desktop!!";
+	sleep 2;
 	print_good "Creating AlMAPRO folder....."
 	mkdir /root/Desktop/AlMAPRO;
+	sleep 2;
 	print_good "Done."
+	sleep 2;
 	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya"
 fi;
 function check_int(){
