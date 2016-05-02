@@ -38,13 +38,6 @@ final=();
 spl_arr=();
 spc_arr=();
 pipe="no";
-if ! [ -d "/root/Desktop/AlMAPRO" ]; then
-	print_error "You don't have AlMAPRO folder on Desktop!!";
-	print_good "Creating AlMAPRO folder....."
-	mk /root/Desktop/AlMAPRO;
-	print_good "Done."
-	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya"
-fi;
 temp_path="/root/Desktop/AlMAPRO/cdpg_tmp/"; # Temp files path. NOTE: Do NOT set it to /tmp folder or any folder inside of it. Why?
 # because if you turn off your computer you'll never continue from the last password and will start all over again.
 dtl="";
@@ -199,6 +192,13 @@ function print_good(){
 function print_info(){
 	>&2 echo -e "\x1B[01;34m$1\x1B[0m";
 }
+if ! [ -d "/root/Desktop/AlMAPRO" ]; then
+	print_error "You don't have AlMAPRO folder on Desktop!!";
+	print_good "Creating AlMAPRO folder....."
+	mkdir /root/Desktop/AlMAPRO;
+	print_good "Done."
+	print_info "If you don't know why AlMAPRO folder, then follow the link *_^ http://facebook.com/A.R.M.Libya"
+fi;
 function check_int(){
 	ok="n";
 	if [[ $1 =~ ^-?[0-9]+$ ]]; then
