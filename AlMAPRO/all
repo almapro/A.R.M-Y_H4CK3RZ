@@ -1,0 +1,88 @@
+#!/bin/bash
+if ! [[ "$(ls /root/Desktop/AlMAPRO/ | grep '~')" == "" ]]; then
+	rm /root/Desktop/AlMAPRO/*~
+fi;
+folder="/root/Desktop/AlMAPRO";
+all_files=($(ls "$folder" | grep .sh));
+spl_arr=();
+s_arr=();
+selected="no";
+if ! [ -z "$1" ];then
+	exists="no";
+	script_name="";
+	for f in "${all_files[@]}";do
+		if [[ "$f" == "$1.sh" ]];then
+			script_name="$f";
+			exists="yes";
+		fi;
+	done;
+	if [ "$exists" == "no" ];then
+		for f in "${all_files[@]}"; do
+			if [[ "$f" == "$1"* ]]; then s_arr+=("$f"); exists="yes";fi;
+			done;
+	fi;
+	if [ "$exists" == "no" ];then
+		echo "The script name you've provided ($1) is not correct!!";
+		sleep 3;
+		exit;
+	else
+		if ! [[ "$script_name" == "" ]];then
+			$folder/$script_name ${*:2};
+			exit;
+		else
+			if [ "${#s_arr[@]}" == "1" ]; then
+				$folder/${s_arr[0]} ${*:2};
+				exit;
+			fi;
+			selected="yes";
+		fi;
+	fi;
+fi;
+function spl() {
+	oldifs="$IFS";
+	IFS="$2";
+	read -a spl_arr <<< "$1";
+	IFS="$oldifs";
+}
+files_arr=();
+if [ "$selected" == "no" ]; then
+	files_arr=("${all_files[@]}");
+else
+	files_arr=("${s_arr[@]}");
+fi;
+leno=${#files_arr[@]};
+script_arr=();
+for ((i = 0 ;i<$leno;i++)); do
+	script_arr+=(" $i) ${files_arr[$i]::-3}");
+done;
+for a in "${script_arr[@]}"; do
+	 echo "$a";
+done;
+read -r -p "Choose Any Script Number : " choosed_script;
+if [ "$choosed_script" == "" ]; then
+	choosed_script="$script_num";
+fi;
+choosed_ok="no";
+for e in "${script_arr[@]}"; do
+	if [[ "$e" == *" $choosed_script) "* ]]; then
+		choosed_ok="yes";
+		spl "$e" ") ";into_arr=(${spl_arr[@]});
+		script_num="${into_arr[0]}";
+		script_nam="${into_arr[1]}";
+	fi;
+done;
+if [ "$choosed_ok" == "no" ]; then
+	echo "Something went wrong :(";
+	sleep 1;
+	echo "Script number is out of the scope, I  guess! :(";
+	sleep 1;
+	echo "Aborting .....";
+	sleep 3;
+	exit;
+fi;
+echo " ";
+echo " ";
+echo " ";
+echo " ";
+$folder/$script_nam.sh ${*:2};
+exit 0;
