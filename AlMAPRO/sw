@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z $1 ]; then
+	ifconfig wlan0 down;
+	iwconfig wlan0 mode monitor;
+	ifconfig wlan0 up;
+else
+	if [ -z $2 ]; then
+		ifconfig wlan$1 down;
+        	iwconfig wlan$1 mode monitor;
+        	ifconfig wlan$1 up;
+	else
+		ifconfig wlan$1 down;
+   	     	iwconfig wlan$1 mode managed;
+        	ifconfig wlan$1 up;
+	fi;
+fi;

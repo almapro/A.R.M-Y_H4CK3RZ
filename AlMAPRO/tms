@@ -1,0 +1,4 @@
+#!/bin/bash
+chmod -R 0700 /var/www/html
+xterm -T "CHMOD ==> /var/www/html" -e 'sleep 5; chmod -R 0777 /var/www/html' &
+tor
